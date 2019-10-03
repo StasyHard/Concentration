@@ -130,7 +130,7 @@
                                     <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Rn-Vq-bAA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBH-mU-pfA">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBH-mU-pfA">
                                 <rect key="frame" x="140" y="536" width="138" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="0.28422095070422537" colorSpace="custom" customColorSpace="sRGB"/>
@@ -148,6 +148,7 @@
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="xvH-qH-lWb" id="nBl-Zz-sXe"/>
+                        <outlet property="newGameButton" destination="SBH-mU-pfA" id="Mb8-q8-zDI"/>
                         <outletCollection property="cardButtons" destination="84w-Qx-DQd" collectionClass="NSMutableArray" id="oni-Sm-FE1"/>
                         <outletCollection property="cardButtons" destination="zZf-gn-9mh" collectionClass="NSMutableArray" id="rOf-FA-vUF"/>
                         <outletCollection property="cardButtons" destination="oYq-cW-dDu" collectionClass="NSMutableArray" id="Xpa-Hd-GxZ"/>

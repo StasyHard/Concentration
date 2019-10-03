@@ -34,9 +34,17 @@ class Concentration {
     }
     
     // функционал функции, которая проверяет все ли карты isMatched
+    func isGameOver() -> Bool {
+        for currentCard in cards {
+            if currentCard.isMatched == false {
+                return false
+            }
+        }
+        return true
+    }
     
     init(numberOfPairsOfCards: Int) {
-        for _ in 1..<numberOfPairsOfCards {
+        for _ in 1...numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]
         }

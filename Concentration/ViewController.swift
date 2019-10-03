@@ -10,13 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration(numberOfPairsOfCards: cardButtons.count + 1 / 2)
+    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
     
     @IBOutlet var cardButtons: [UIButton]!
     
+    @IBOutlet weak var newGameButton: UIButton!
+    
     @IBOutlet weak var flipCountLabel: UILabel!
     
-    
+   
     var flipCount = 0 {
         didSet {
             flipCountLabel.text = "Flips: \(flipCount)"
@@ -29,9 +31,14 @@ class ViewController: UIViewController {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
             //вызываю функцию, которая проверяет все ли карты isMatched
+            let gameIsOver = game.isGameOver()
+            if gameIsOver {
+                newGameButton.isHidden = false
+            }
         } else { print("Карта не в массиве")
         }
     }
+
     
     func updateViewFromModel() {
         for index in 0...cardButtons.indices.count - 1 {
