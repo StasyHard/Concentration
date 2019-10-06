@@ -18,7 +18,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
-   
+    static let defaultEmojies = [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ]
+    var emojiChoices: [String] = defaultEmojies
+    
     var flipCount = 0 {
         didSet {
             flipCountLabel.text = "Flips: \(flipCount)"
@@ -29,17 +31,15 @@ class ViewController: UIViewController {
         flipCount += 1
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
-            updateViewFromModel()
-            //вызываю функцию, которая проверяет все ли карты isMatched
-            let gameIsOver = game.isGameOver()
-            if gameIsOver {
+            if game.isGameOver() {
                 newGameButton.isHidden = false
             }
-        } else { print("Карта не в массиве")
+            updateViewFromModel()
+        } else {
+            print("Карта не в массиве")
         }
     }
 
-    
     func updateViewFromModel() {
         for index in 0...cardButtons.indices.count - 1 {
             let button = cardButtons[index]
@@ -54,8 +54,6 @@ class ViewController: UIViewController {
         }
     }
 
-    var emojiChoices = [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ]
-    
     var emoji = [Int: String]()
     
     func emoji(for card: Card) -> String {
@@ -63,14 +61,15 @@ class ViewController: UIViewController {
                 let randomeIndex = Int(arc4random_uniform (UInt32(emojiChoices.count)))
                 emoji[card.identifier] = emojiChoices.remove(at: randomeIndex)
             }
-               return emoji[card.identifier] ?? "?"
+        return emoji[card.identifier] ?? "?"
         }
     
     @IBAction func NewGameButton(_ sender: UIButton) {
-        
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        emojiChoices = ViewController.defaultEmojies
+        emoji.removeAll()
+        updateViewFromModel()
+        newGameButton.isHidden = true
     }
-    
-
-
 }
 
