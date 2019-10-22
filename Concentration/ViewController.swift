@@ -18,7 +18,16 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
-    static let defaultEmojies = [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ]
+    //вместо массива указала многомерный массив и беру рандомно элемент из него
+    static let emojiesArray = [
+        [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ],
+        [ "🐶", "🐨", "🐒", "🐷", "🐸", "🦀", "🐬", "🦊", "🦋" ],
+        [ "🍇", "🍒", "🥑", "🥐", "🥩", "🍕", "🍝", "🥗", "🥦" ],
+        [ "😃", "😍", "😎", "🧐", "🤪", "🥺", "😳", "🤗", "🤒" ],
+        [ "⚽️", "🏀", "⚾️", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓" ]
+    ]
+    
+    static var defaultEmojies = emojiesArray.randomElement()!
     var emojiChoices: [String] = defaultEmojies
     
     var flipCount = 0 {
@@ -52,6 +61,8 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
         }
+        //кладу новый массив при обновлении вью
+        ViewController.defaultEmojies = ViewController.emojiesArray.randomElement()!
     }
 
     var emoji = [Int: String]()
