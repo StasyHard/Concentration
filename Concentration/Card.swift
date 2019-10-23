@@ -12,6 +12,7 @@ struct Card {
     var isFaceUp = false
     var isMatched = false
     var identifier: Int
+    var upside = 0
     
     static var identifierFactory = 0
     

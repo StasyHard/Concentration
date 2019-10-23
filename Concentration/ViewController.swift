@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var newGameButton: UIButton!
     
+    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var flipCountLabel: UILabel!
     
     //вместо массива указала многомерный массив и беру рандомно элемент из него
@@ -30,14 +31,8 @@ class ViewController: UIViewController {
     static var defaultEmojies = emojiesArray.randomElement()!
     var emojiChoices: [String] = defaultEmojies
     
-    var flipCount = 0 {
-        didSet {
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             if game.isGameOver() {
@@ -63,6 +58,8 @@ class ViewController: UIViewController {
         }
         //кладу новый массив при обновлении вью
         ViewController.defaultEmojies = ViewController.emojiesArray.randomElement()!
+        scoreLabel.text = "Score: \(game.score)"
+        flipCountLabel.text = "Flips: \(game.flipCount)"
     }
 
     var emoji = [Int: String]()
@@ -81,6 +78,8 @@ class ViewController: UIViewController {
         emoji.removeAll()
         updateViewFromModel()
         newGameButton.isHidden = true
+        game.score = 0
+        game.flipCount = 0
     }
 }
 

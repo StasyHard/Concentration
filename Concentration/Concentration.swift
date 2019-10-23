@@ -11,15 +11,29 @@ import Foundation
 class Concentration {
     
     var cards = [Card]()
+    //считает очки
+    var score = 0
+    var flipCount = 0
     
     private var indexOfOneAndOnlyFaceUpCard: Int?
     
     func chooseCard(at index: Int) {
+        flipCount += 1
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    // добавляю 2 очка если карты совпали
+                    score += 2
+                } else {
+                    cards[index].upside += 1
+                    cards[matchIndex].upside += 1
+                    if cards[index].upside > 1 && cards[matchIndex].upside > 1 {
+                        score -= 2
+                    } else if cards[index].upside > 1 || cards[matchIndex].upside > 1  {
+                        score -= 1
+                    }
                 }
                 cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = nil
@@ -50,5 +64,6 @@ class Concentration {
         }
         cards = cards.shuffled()
     }
+    
     
 }
