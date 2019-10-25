@@ -13,14 +13,14 @@ class ViewController: UIViewController {
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
     var numberOfPairsOfCards: Int {
-            (cardButtons.count + 1) / 2
+        (cardButtons.count + 1) / 2
     }
     
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var newGameButton: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var flipCountLabel: UILabel!
-
+    
     @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -32,18 +32,27 @@ class ViewController: UIViewController {
             print("Карта не в массиве")
         }
     }
-
+    
+    @IBAction private func NewGameButton(_ sender: UIButton) {
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        emojiChoices = ViewController.defaultEmojies
+        emoji.removeAll()
+        updateViewFromModel()
+        newGameButton.isHidden = true
+        game.updateScoreAndFlipCount()
+    }
+    
     //вместо массива указала многомерный массив и беру рандомно элемент из него
-      private static let emojiesArray = [
-           [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ],
-           [ "🐶", "🐨", "🐒", "🐷", "🐸", "🦀", "🐬", "🦊", "🦋" ],
-           [ "🍇", "🍒", "🥑", "🥐", "🥩", "🍕", "🍝", "🥗", "🥦" ],
-           [ "😃", "😍", "😎", "🧐", "🤪", "🥺", "😳", "🤗", "🤒" ],
-           [ "⚽️", "🏀", "⚾️", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓" ]
-       ]
-       
-       private static var defaultEmojies = emojiesArray.randomElement()!
-       private var emojiChoices: [String] = defaultEmojies
+    private static let emojiesArray = [
+        [ "👻", "😱", "🤐", "👽", "😈", "🎃", "🙀", "👾", "👺" ],
+        [ "🐶", "🐨", "🐒", "🐷", "🐸", "🦀", "🐬", "🦊", "🦋" ],
+        [ "🍇", "🍒", "🥑", "🥐", "🥩", "🍕", "🍝", "🥗", "🥦" ],
+        [ "😃", "😍", "😎", "🧐", "🤪", "🥺", "😳", "🤗", "🤒" ],
+        [ "⚽️", "🏀", "⚾️", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓" ]
+    ]
+    
+    private static var defaultEmojies = emojiesArray.randomElement()!
+    private var emojiChoices: [String] = defaultEmojies
     
     private func updateViewFromModel() {
         for index in 0...cardButtons.indices.count - 1 {
@@ -62,24 +71,25 @@ class ViewController: UIViewController {
         scoreLabel.text = "Score: \(game.score)"
         flipCountLabel.text = "Flips: \(game.flipCount)"
     }
-
+    
     private var emoji = [Int: String]()
     
     private func emoji(for card: Card) -> String {
-            if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-                let randomeIndex = Int(arc4random_uniform (UInt32(emojiChoices.count)))
-                emoji[card.identifier] = emojiChoices.remove(at: randomeIndex)
-            }
-        return emoji[card.identifier] ?? "?"
+        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
+            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
-    
-    @IBAction private func NewGameButton(_ sender: UIButton) {
-        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-        emojiChoices = ViewController.defaultEmojies
-        emoji.removeAll()
-        updateViewFromModel()
-        newGameButton.isHidden = true
-        game.updateScoreAndFlipCount()
+        return emoji[card.identifier] ?? "?"
     }
 }
 
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform (UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform (UInt32(self)))
+        } else {
+            return 0
+        }
+    }
+}
