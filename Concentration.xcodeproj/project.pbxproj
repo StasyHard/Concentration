@@ -73,8 +73,8 @@
 			children = (
 				560AA2292343C6280022AFED /* Supporting Files */,
 				56CA8BCD2342790800241651 /* ViewController.swift */,
-				560AA2272343C5840022AFED /* Concentration.swift */,
 				560AA22A2343C9EE0022AFED /* Card.swift */,
+				560AA2272343C5840022AFED /* Concentration.swift */,
 				56CA8BCF2342790800241651 /* Main.storyboard */,
 				56CA8BD72342790900241651 /* Info.plist */,
 			);

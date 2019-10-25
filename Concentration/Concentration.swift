@@ -10,12 +10,39 @@ import Foundation
 
 class Concentration {
     
-    var cards = [Card]()
+    private (set) var cards = [Card]()
     //считает очки
-    var score = 0
-    var flipCount = 0
+    private (set) var score = 0
+    private (set) var flipCount = 0
     
-    private var indexOfOneAndOnlyFaceUpCard: Int?
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set (newValue) {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
+    
+    init(numberOfPairsOfCards: Int) {
+        for _ in 1...numberOfPairsOfCards {
+            let card = Card()
+            cards += [card, card]
+        }
+        cards = cards.shuffled()
+    }
     
     func chooseCard(at index: Int) {
         flipCount += 1
@@ -36,12 +63,7 @@ class Concentration {
                     }
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
             } else {
-                for flipdownIndex in cards.indices {
-                    cards[flipdownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
@@ -57,13 +79,10 @@ class Concentration {
         return true
     }
     
-    init(numberOfPairsOfCards: Int) {
-        for _ in 1...numberOfPairsOfCards {
-            let card = Card()
-            cards += [card, card]
+    func updateScoreAndFlipCount() {
+        if isGameOver() == true {
+            score = 0
+            flipCount = 0
         }
-        cards = cards.shuffled()
     }
-    
-    
 }
