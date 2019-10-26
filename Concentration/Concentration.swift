@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     
     private (set) var cards = [Card]()
     //считает очки
@@ -44,7 +44,7 @@ class Concentration {
         cards = cards.shuffled()
     }
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         flipCount += 1
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
@@ -77,12 +77,5 @@ class Concentration {
             }
         }
         return true
-    }
-    
-    func updateScoreAndFlipCount() {
-        if isGameOver() == true {
-            score = 0
-            flipCount = 0
-        }
     }
 }

@@ -34,12 +34,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func NewGameButton(_ sender: UIButton) {
-        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         emojiChoices = ViewController.defaultEmojies
         emoji.removeAll()
         updateViewFromModel()
         newGameButton.isHidden = true
-        game.updateScoreAndFlipCount()
     }
     
     //вместо массива указала многомерный массив и беру рандомно элемент из него
