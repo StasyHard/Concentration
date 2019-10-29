@@ -19,7 +19,11 @@ class ViewController: UIViewController {
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var newGameButton: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet{
+           updateFlipCountLabel()
+        }
+    }
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender) {
@@ -68,7 +72,18 @@ class ViewController: UIViewController {
         //кладу новый массив при обновлении вью
         ViewController.defaultEmojies = ViewController.emojiesArray.randomElement()!
         scoreLabel.text = "Score: \(game.score)"
-        flipCountLabel.text = "Flips: \(game.flipCount)"
+        updateFlipCountLabel()
+    }
+    
+    func updateFlipCountLabel()  {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        ]
+        let attributtedString = NSAttributedString(
+            string: "Flips: \(game.flipCount)",
+            attributes: attributes)
+        flipCountLabel.attributedText = attributtedString
     }
     
     private var emoji = [Card: String]()
