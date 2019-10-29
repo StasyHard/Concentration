@@ -48,7 +48,7 @@ struct Concentration {
         flipCount += 1
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
-                if cards[matchIndex].identifier == cards[index].identifier {
+                if cards[matchIndex] == cards[index] {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                     // добавляю 2 очка если карты совпали

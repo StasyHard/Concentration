@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct Card {
+struct Card: Hashable {
+
     var isFaceUp = false
     var isMatched = false
-    var identifier: Int
+    private var identifier: Int
     var upside = 0
     
     private static var identifierFactory = 0
@@ -19,6 +20,15 @@ struct Card {
     init() {
         self.identifier = Card.getUniqueIdentifier()
     }
+    
+    //функции == и hash реализуют протокол Hashable
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
     
     private static func getUniqueIdentifier() -> Int  {
         Card.identifierFactory += 1
