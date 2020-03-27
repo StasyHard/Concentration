@@ -25,13 +25,15 @@ struct Card: Hashable {
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.identifier == rhs.identifier
     }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
-    
     
     private static func getUniqueIdentifier() -> Int  {
         Card.identifierFactory += 1
         return identifierFactory
     }
+    
+    
 }

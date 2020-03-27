@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     
     @IBAction private func NewGameButton(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
-        emojiChoices = ViewController.defaultEmojies
+        emojiChoices = ConcentrationViewController.defaultEmojies
         emoji.removeAll()
         updateViewFromModel()
         newGameButton.isHidden = true
@@ -70,12 +70,12 @@ class ViewController: UIViewController {
             }
         }
         //кладу новый массив при обновлении вью
-        ViewController.defaultEmojies = ViewController.emojiesArray.randomElement()!
+        ConcentrationViewController.defaultEmojies = ConcentrationViewController.emojiesArray.randomElement()!
         scoreLabel.text = "Score: \(game.score)"
         updateFlipCountLabel()
     }
     
-    func updateFlipCountLabel()  {
+    private func updateFlipCountLabel()  {
         let attributes: [NSAttributedString.Key: Any] = [
             .strokeWidth: 5.0,
             .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
